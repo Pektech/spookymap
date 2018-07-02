@@ -1,5 +1,5 @@
 from flask import Flask
-import os
+from app.instance.settings import app_config
 
 
 
@@ -11,18 +11,11 @@ import os
 
 #### Application Factory Function ####
 
-def create_app(config=None):
+def create_app(config_name):
     from . import routes
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object('app.config.settings')
-    if 'FLASK_CONF' in os.environ:
-        app.config.from_envvar('FLASK_CONF')
-        # load app sepcified configuration
-    if config is not None:
-        if isinstance(config, dict):
-            app.config.update(config)
-        elif config.endswith('.py'):
-            app.config.from_pyfile(config)
+    app = Flask(__name__)
+    app.config.from_object(app_config['development'])
+    app.config.from_pyfile('instance/settings.py')
     #initialize extentions
     routes.init_app(app)
     #models.init_app(app)

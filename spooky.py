@@ -1,5 +1,9 @@
+import os
 from app import create_app
 
 
-app = create_app('flask.cfg')
+config_name = os.getenv('APP_SETTINGS')
+app = create_app(config_name)
 
+if __name__ == '__main__':
+    app.run()

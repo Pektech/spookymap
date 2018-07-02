@@ -1,6 +1,7 @@
 from . import sp
+from flask import render_template
 
 
 @sp.route('/')
-def hello_world():
-    return 'Hello World!'
+def main():
+    return render_template('main.html')
